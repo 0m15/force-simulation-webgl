@@ -118,22 +118,19 @@ export default function ThreeRenderer({ nodes, onClickCanvas, onClickNode, simul
 
   useEffect(() => {}, [nodes])
 
-  // Compute per-frame instance positions
   const ref = useRef()
 
+  // Compute per-frame instance positions
   useFrame((state, delta) => {
-    let x = 0
-    let y = 0
-
     for (var i = 0, i3 = 0, l = 1000; i < l; i++, i3 += 4) {
-      if (!nodes[i] || isNaN(nodes[i].x)) {
+      const node = nodes[i]
+
+      if (!node || isNaN(node.x)) {
         break
       }
 
-      const node = nodes[i]
-
-      x = node.x - window.innerWidth / 2
-      y = node.y - window.innerHeight / 2
+      const x = node.x - window.innerWidth / 2
+      const y = node.y - window.innerHeight / 2
 
       if (!animations.current[node.id]) {
         animations.current[node.id] = {
@@ -144,16 +141,18 @@ export default function ThreeRenderer({ nodes, onClickCanvas, onClickNode, simul
       }
 
       const anim = animations.current[node.id]
-
       anim.x = lerp(anim.x, x, delta * 2)
       anim.y = lerp(anim.y, y, delta * 2)
       anim.scale = lerp(anim.scale, 1, delta * 2)
 
+      // update attributes passed to shader
       translateArray[i3 + 0] = anim.x
       translateArray[i3 + 1] = -anim.y
       translateArray[i3 + 3] = anim.scale * (node.r / 32)
     }
+
     geometry.setAttribute('translate', new THREE.InstancedBufferAttribute(translateArray, 4))
+
     ref.current.instanceMatrix.needsUpdate = true
   })
 
