@@ -110,7 +110,6 @@ export default function ThreeRenderer({ nodes, onClickCanvas, onClickNode, simul
     }
 
     geometry.setAttribute('translate', new THREE.InstancedBufferAttribute(translateArray, 4))
-
     geometry.setAttribute('instanceUv', new THREE.InstancedBufferAttribute(uvArray, 2))
   }, [geometry, nodes, translateArray, uvArray])
 
