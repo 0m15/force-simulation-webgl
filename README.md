@@ -1,11 +1,7 @@
-A (work-in-progress) webgl force simulation made with:
+A webgl rendered force simulation.
 
-- [d3](http://d3js.org)
-- [react-three-fiber](https://github.com/react-spring/react-three-fiber)
-- [three](http://threejs.org)
-- [lerp](http://github.com/mattdesl/lerp)
-- web workers
-- custom shader material
+See online on https://codesandbox.io/s/d3-force-react-three-fiber-instanced-mesh-8zrp4
+(Click on canvas to add nodes)
 
 ## Motivation
 
@@ -22,3 +18,12 @@ Exploring use cases of threejs and react-three-fiber for performant data visuali
 - A texture with equal subdivision is used as a sprite.
 
 - A custom shader material takes care of translation and coloring.
+
+## Made with:
+
+- [d3](http://d3js.org)
+- [react-three-fiber](https://github.com/react-spring/react-three-fiber)
+- [three](http://threejs.org)
+- [lerp](http://github.com/mattdesl/lerp)
+- web workers
+- glsl
