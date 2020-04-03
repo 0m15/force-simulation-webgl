@@ -27,3 +27,7 @@ Exploring use cases of threejs and react-three-fiber for performant data visuali
 - [lerp](http://github.com/mattdesl/lerp)
 - web workers
 - glsl
+
+## TODO
+
+- Add interaction (click, hover, etc.)
