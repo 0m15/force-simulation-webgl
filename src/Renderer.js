@@ -28,13 +28,11 @@ const Shader = {
 
     void main() {
         float scale = translate.w;
-        vec3 t = vec3(translate.x, translate.y, 0.0);
-        vec4 mvPosition = modelViewMatrix * vec4( t, 1.0 );
+        vec4 mvPosition = modelViewMatrix * vec4( translate.xyz, 1.0 );
         vScale = scale;
         mvPosition.xyz += position*scale;
 
         vec2 slices = vec2(1.0) / textureDivision;
-        //vUv = uv;
         vUv = slices * instanceUv + slices * uv;
 
         gl_Position = projectionMatrix * mvPosition;
@@ -57,10 +55,12 @@ const Shader = {
 export default function ThreeRenderer({ nodes, onClickCanvas, onClickNode, simulation, width, height }) {
   const [selected, set] = useState(undefined)
   const previous = useRef()
+
   useEffect(() => {
     previous.current = selected
   }, [selected])
 
+  // click handler
   useEffect(() => {
     const onclick = evt => {
       if (selected !== undefined) {
