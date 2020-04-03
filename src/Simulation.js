@@ -5,61 +5,52 @@ export default function Simulation({ data, onAddNode, children, width, height })
   const [nodes, setNodes] = useState(() => [], [])
   const [selectedNode, setSelectedNode] = useState(null)
 
+  const worker = useMemo(() => {
+    const worker = new Worker('/worker.js')
+    worker.onmessage = e => {
+      setNodes(e.data.nodes)
+    }
+    return worker
+  }, [])
+
   // sim
-  const simulation = useMemo(() => {
+  /*const simulation = useMemo(() => {
     const simulation = forceSimulation()
-      .force(
-        'x',
-        forceX((d, i) => {
-          if (i === 0) return width / 2
-          return d.cx
-        })
-      )
-      .force(
-        'y',
-        forceY((d, i) => {
-          if (i === 0) return height / 2
-          return d.cy
-        })
-      )
+      .force('x', forceX((d, i) => d.cx))
+      .force('y', forceY((d, i) => d.cy))
       .force(
         'collide',
         forceCollide()
-          .radius(function(d) {
-            return d.r + 1
-          })
+          .radius(d => d.r + 1)
           .strength(0.5)
       )
       .stop()
     return simulation
-  }, [width, height])
+  }, [width, height])*/
 
-  const update = useMemo(() => {
+  /*const update = useMemo(() => {
     return () => {
       simulation.alpha(1)
       for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
         simulation.tick()
       }
     }
-  }, [simulation])
+  }, [simulation])*/
 
   const onClickCanvas = useCallback(
     evt => {
       const center = { x: width / 2, y: height / 2 }
       const mouse = { x: evt.clientX - center.x, y: evt.clientY - center.y }
 
-      setSelectedNode(state => null)
-
       if (selectedNode) {
-        simulation.nodes(data)
-        update()
-        setNodes(simulation.nodes())
+        worker.postMessage({ nodes: data })
+        setSelectedNode(state => null)
         return
       }
 
       onAddNode({ parent: null, mouse, center })
     },
-    [onAddNode, data, selectedNode, simulation, update, width, height]
+    [worker, onAddNode, data, selectedNode, width, height]
   )
 
   const onClickNode = useCallback(
@@ -109,29 +100,26 @@ export default function Simulation({ data, onAddNode, children, width, height })
       })
 
       // magnify nodes
-      simulation.nodes(related)
+      //simulation.nodes(related)
+      worker.postMessage({ nodes: related })
 
-      update()
+      //update()
 
-      setNodes(related)
+      //setNodes(related)
       setSelectedNode(state => node)
     },
-    [simulation, data, width, height, update]
+    [worker, data, width, height]
   )
 
-  // update/restart on data change
+  // update on data change
   useEffect(() => {
-    simulation.nodes(data)
-    update()
-
-    setNodes(simulation.nodes())
-  }, [simulation, update, data])
+    worker.postMessage({ nodes: data })
+  }, [data, worker])
 
   const child = React.Children.only(children)
   return React.cloneElement(child, {
     onClickNode,
     onClickCanvas,
-    simulation,
     nodes
   })
 }

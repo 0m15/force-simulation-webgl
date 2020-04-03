@@ -3,8 +3,11 @@ import Simulation from './Simulation'
 import { Canvas } from 'react-three-fiber'
 import ThreeRenderer from './Renderer'
 import useDimensions from 'react-use-dimensions'
+import { scalePow } from 'd3'
 
-const radiusScale = i => (i % 10) * 10
+const radiusScale = scalePow(1.2)
+  .domain([1, 10])
+  .range([32, 7])
 
 function createRootNode(center, radius) {
   const node = {}

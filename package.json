@@ -1,11 +1,8 @@
 {
-  "name": "react-three-fiber-starter",
+  "name": "d3-force-react-three-fiber-instanced-mesh",
   "version": "1.0.0",
-  "description": "react-three-fiber with react-spring",
-  "keywords": [
-    "react",
-    "three.js"
-  ],
+  "description": "",
+  "keywords": [],
   "main": "src/index.js",
   "dependencies": {
     "d3": "5.15.1",
