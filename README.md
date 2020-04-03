@@ -31,3 +31,4 @@ Exploring use cases of threejs and react-three-fiber for performant data visuali
 ## TODO
 
 - Add interaction (click, hover, etc.)
+- Handle resizing of canvas
