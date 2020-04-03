@@ -1,0 +1,34 @@
+{
+  "name": "react-three-fiber-starter",
+  "version": "1.0.0",
+  "description": "react-three-fiber with react-spring",
+  "keywords": [
+    "react",
+    "three.js"
+  ],
+  "main": "src/index.js",
+  "dependencies": {
+    "d3": "5.15.1",
+    "lerp": "1.0.3",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-scripts": "3.4.1",
+    "react-spring": "8.0.27",
+    "react-three-fiber": "4.0.25",
+    "react-use-dimensions": "1.2.1",
+    "three": "0.115.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
